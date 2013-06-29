@@ -5,7 +5,7 @@ author_url: http://adit.io
 ---
 
 Haskell was designed as a practical, purely functional programming language. It's famous for
-it's monads and it's type system, but I keep coming back to it because of it's elegance. Haskell
+its monads and its type system, but I keep coming back to it because of its elegance. Haskell
 makes coding a real joy for me.
 
 ```haskell
