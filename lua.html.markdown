@@ -1,7 +1,8 @@
 ---
 language: lua
-author: Tyler Neylon
-author_url: http://tylerneylon.com/
+contributors:
+    - ["Tyler Neylon", "http://tylerneylon.com/"]
+filename: learnlua.lua
 ---
 
 ```lua
@@ -86,7 +87,7 @@ until num == 0
 ----------------------------------------------------
 
 function fib(n)
-  if n < 2 then return 1 end
+  if n < 2 then return n end
   return fib(n - 2) + fib(n - 1)
 end
 
@@ -124,6 +125,9 @@ f = function (x) return x * x end
 
 -- And so are these:
 local function g(x) return math.sin(x) end
+local g = function(x) return math.sin(x) end
+-- Equivalent to local function g(x)..., except referring
+-- to g in the function body won't work as expected.
 local g; g  = function (x) return math.sin(x) end
 -- the 'local g' decl makes g-self-references ok.
 
@@ -131,6 +135,10 @@ local g; g  = function (x) return math.sin(x) end
 
 -- Calls with one string param don't need parens:
 print 'hello'  -- Works fine.
+
+-- Calls with one table param don't need parens
+-- either (more on tables below):
+print {} -- Works fine too.
 
 
 ----------------------------------------------------
@@ -202,7 +210,7 @@ f2 = {a = 2, b = 3}
 
 metafraction = {}
 function metafraction.__add(f1, f2)
-  sum = {}
+  local sum = {}
   sum.b = f1.b * f2.b
   sum.a = f1.a * f2.b + f2.a * f1.b
   return sum
@@ -265,7 +273,7 @@ eatenBy = myFavs.animal  -- works! thanks, metatable
 Dog = {}                                   -- 1.
 
 function Dog:new()                         -- 2.
-  newObj = {sound = 'woof'}                -- 3.
+  local newObj = {sound = 'woof'}          -- 3.
   self.__index = self                      -- 4.
   return setmetatable(newObj, self)        -- 5.
 end
@@ -300,7 +308,7 @@ mrDog:makeSound()  -- 'I say woof'         -- 8.
 LoudDog = Dog:new()                           -- 1.
 
 function LoudDog:makeSound()
-  s = self.sound .. ' '                       -- 2.
+  local s = self.sound .. ' '                 -- 2.
   print(s .. s .. s)
 end
 
@@ -321,7 +329,7 @@ seymour:makeSound()  -- 'woof woof woof'      -- 4.
 
 -- If needed, a subclass's new() is like the base's:
 function LoudDog:new()
-  newObj = {}
+  local newObj = {}
   -- set up newObj
   self.__index = self
   return setmetatable(newObj, self)
